@@ -1,0 +1,120 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Products</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e59232f0a1.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div xmlns:th="http://www.thymeleaf.org">
+
+    <div class="container">
+
+        <h3 class="jumbotron-heading">Create / Update Song</h3>
+
+                <form th:action="(${song} != null ? '/songs/' + ${song.id} +'/edit' : '/songs/save' )" method="POST">
+                    <input id="id" type="hidden" name="id"
+                           th:value="(${song} != null ? ${song.getId()} : '')">
+
+                    <div class="form-group">
+                        <label for="trackId">Track ID</label>
+                        <input type="text"
+                               class="form-control"
+                               id="trackId"
+                               name="trackId"
+                               th:value="(${song} != null ? ${song.trackId} : '')"
+                               required
+                               placeholder="Enter track Id">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Song title</label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               name="title"
+                               th:value="(${song} != null ? ${song.getTitle()} : '')"
+                               required
+                               placeholder="Enter song title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="genre">Genre</label>
+                        <input type="text"
+                               class="form-control"
+                               id="genre"
+                               name="genre"
+                               th:value="(${song} != null ? ${song.genre} : '')"
+                               placeholder="Enter Song Genre">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="releaseYear">Release Year</label>
+                        <input type="text"
+                               class="form-control"
+                               id="releaseYear"
+                               name="releaseYear"
+                               th:value="(${song} != null ? ${song.releaseYear} : '')"
+                               placeholder="Release Year">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="performers"> Performers</label>
+
+                        <select class="form-control"
+                                id="performers"
+                                name="performerIds"
+                                multiple="multiple">
+                            <option th:each="performer: ${performers}"
+                                    th:text="${performer.firstName} + ' ' + ${performer.lastName}"
+                                    th:value="${performer.id}"
+                                    th:selected="${song?.performers?.contains(performer)}"
+                            ></option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="album">Album</label>
+
+                        <select id="album"
+                                class="form-control"
+                                name="albumId"
+                        >
+                            <option th:each="album: ${albums}"
+                                    th:text="${album.name}"
+                                    th:value="${album.id}"
+                                    th:selected="${album.id == song?.album?.id}"
+                            ></option>
+                            >
+                        </select>
+                    </div>
+
+
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/songs">Back</a>
+
+                </form>
+
+    </div>
+</div>
+
+</body>
+</html>

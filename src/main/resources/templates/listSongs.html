@@ -1,0 +1,117 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+        <meta charset="UTF-8"/>
+        <title>Products</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/e59232f0a1.js" crossorigin="anonymous"></script>
+
+    <title>Music Store</title>
+
+    <style>
+        body {
+            width: 800px;
+            margin: auto;
+        }
+
+        form{
+           margin: 0;
+        }
+
+        td{
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h2>Music Store</h2>
+</header>
+<main>
+    <div>
+
+        <div th:if="${error} != null" class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+        <a href="/songs/add">
+            <button class="btn btn-primary my-3"> Add a song</button>
+        </a>
+
+        <form th:method="GET"  class="">
+            <label for="album-filter"> Filter by Album </label>
+
+            <select id="album-filter"
+                    name="albumId"
+                    class="form-control">
+                <option value="">All <Albums></Albums></option>
+                <option th:each="album: ${albums}" th:value="${album.id}" th:text="${album.name}"></option>
+            </select>
+
+            <div class="my-2">
+                <button class="btn btn-primary"> Filter </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="songs">
+        <table class="table table-striped">
+            <thead>
+                <td>Title</td>
+                <td>Album</td>
+                <td colspan="3"></td>
+            </thead>
+
+            <tbody>
+            <tr th:each="song: ${songs}" class="song-row">
+
+                <td th:text="${song.title}"></td>
+
+                <td th:text="${song.album?.name}"></td>
+
+                <td>
+
+                    <form th:method="GET"  th:action="'/songs/' + ${song.id} ">
+                        <button class="btn btn-outline-primary">Details</button>
+                    </form>
+
+                </td>
+
+                <td>
+                    <form th:method="GET" th:action="@{/artist}">
+                        <input type="hidden" th:value="${song.trackId}" name="trackId">
+                        <button class="btn btn-outline-primary">Add Performer</button>
+                    </form>
+                </td>
+                <td>
+
+                    <form th:method="GET"  th:action="'/songs/' + ${song.id} + '/edit' ">
+                        <button class="btn btn-primary">Edit</button>
+                    </form>
+
+                </td>
+                <td>
+                    <form th:method="POST" th:action="'/songs/' + ${song.id} + '/delete' ">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</main>
+</body>
+</html>
