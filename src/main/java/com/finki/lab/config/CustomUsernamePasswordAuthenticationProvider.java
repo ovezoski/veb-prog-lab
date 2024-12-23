@@ -1,5 +1,6 @@
 package com.finki.lab.config;
 
+import com.finki.lab.model.User;
 import com.finki.lab.service.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -30,13 +31,13 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
             throw new BadCredentialsException("Enpty credentials!");
         }
 
-        UserDetails userDetails = this.userService.loadUserByUsername(username);
+        User userDetails = this.userService.loadUserByUsername(username);
 
         if(!passwordEncoder.matches(password, userDetails.getPassword())){
             throw new BadCredentialsException("Incorrect password!");
         }
 
-        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword());
     }
 
     @Override

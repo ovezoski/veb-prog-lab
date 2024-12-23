@@ -30,6 +30,7 @@ public class WebSecurityConfig {
         this.authProvider = authProvider;
     }
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
@@ -53,7 +54,7 @@ public class WebSecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .logoutSuccessUrl("/login")
                 )
-                .exceptionHandling((ex) ->  ex.accessDeniedPage("access_denied"))                ;
+                .exceptionHandling((ex) ->  ex.accessDeniedPage("/access_denied"))                ;
 
         return httpSecurity.build();
     }
@@ -87,12 +88,12 @@ public class WebSecurityConfig {
         return new InMemoryUserDetailsManager(user1, user2, admin);
     }
 
-
-    @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception{
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(authProvider);
-        return authenticationManagerBuilder.build();
-    }
+//
+//    @Bean
+//    public AuthenticationManager authManager(HttpSecurity http) throws Exception{
+//        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+//        authenticationManagerBuilder.authenticationProvider(authProvider);
+//        return authenticationManagerBuilder.build();
+//    }
 
 }

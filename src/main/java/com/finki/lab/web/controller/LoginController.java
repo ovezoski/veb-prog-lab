@@ -26,16 +26,17 @@ public class LoginController {
     @PostMapping
     public String login(HttpServletRequest request, Model model){
 
-        User user = null;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
         try{
-
-        } catch(RuntimeException ex){
+            authService.login(username, password);
+            return "redirect:/songs";
+        } catch(Exception ex){
             model.addAttribute("hasError", true);
             model.addAttribute("error", ex.getMessage());
             return "login";
         }
+
     }
 }

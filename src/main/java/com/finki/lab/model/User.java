@@ -14,7 +14,9 @@ import java.util.Collections;
 @Entity
 @NoArgsConstructor
 @Table(name = "music_users")
-public class User implements UserDetails {
+public class User
+//        implements UserDetails
+{
 
     @Id
     private String username;
@@ -42,32 +44,32 @@ public class User implements UserDetails {
         this.name = name;
         this.surname = surname;
     }
+//
+//    @Override
+//    public Collection<?extends GrantedAuthority> getAuthorities(){
+//        return Collections.singletonList(role);
+//    }
 
-    @Override
-    public Collection<?extends GrantedAuthority> getAuthorities(){
-        return Collections.singletonList(role);
-    }
-
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return isEnabled;
-    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return isAccountNonExpired;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return isAccountNonLocked;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return isCredentialsNonExpired;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return isEnabled;
+//    }
 
 
 

@@ -44,7 +44,9 @@ public class SongController {
         model.addAttribute("songs", songs);
         model.addAttribute("albums", albums);
         model.addAttribute("error", error);
-        return "listSongs";
+        model.addAttribute("bodyContent", "listSongs");
+        return "master-template";
+//        return "listSongs";
 
     }
 
